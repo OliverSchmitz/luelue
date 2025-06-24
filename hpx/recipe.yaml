@@ -30,6 +30,7 @@ requirements:
     # Section for the target platform. Might not be the same as the build platform!
     # Dependencies required during build phase needed on the host.
     - asio
+    - libboost-devel #####################################################
     - if: not osx
       then: libboost-headers
     # osx actually needs boost's CMake metadata _and_ libs
