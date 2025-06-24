@@ -20,5 +20,5 @@ cmake \
     -D HPX_WITH_NETWORKING=FALSE \
     -D HPX_WITH_TESTS=FALSE \
     ..
-cmake --build . --config Release --parallel ${CPU_COUNT}
+cmake --build . --config Release --parallel 1 #${CPU_COUNT}
 cmake --install .
