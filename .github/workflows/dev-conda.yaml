@@ -39,17 +39,18 @@ jobs:
                   rattler-build
                 init-shell: >-
                   bash
+                  powershell
 
             - name: Build
               if: runner.os != 'Windows'
               shell: bash -l {0}
               run: |
                   cd ${{ runner.temp }}
-                  rattler-build build --recipe ${{ github.workspace }}/conda/recipe.yaml
+                  rattler-build build --recipe ${{ github.workspace }}/hpx/recipe.yaml
 
             - name: Build
               if: runner.os == 'Windows'
               shell: pwsh
               run: |
                   cd ${{ runner.temp }}
-                  rattler-build build --recipe ${{ github.workspace }}/conda/recipe.yaml
+                  rattler-build build --recipe ${{ github.workspace }}/hpx/recipe.yaml
