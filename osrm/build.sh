@@ -8,6 +8,7 @@ BUILDDIR="build"
 
 mkdir -p ${BUILD_DIR}
 
+CXXFLAGS="${CXXFLAGS} -D_LIBCPP_DISABLE_AVAILABILITY" \
 cmake ${CMAKE_ARGS} \
   -S ${SRC_DIR} \
   -B ${BUILD_DIR} \

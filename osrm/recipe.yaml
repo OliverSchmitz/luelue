@@ -18,6 +18,7 @@ requirements:
   build:
     - ${{ compiler('cxx') }}
     # - {{ stdlib("c") }}
+    - ${{ "vs2022_win-64" if win }} # only in GitHub actions
     - cmake
     - ninja
     - pkg-config
