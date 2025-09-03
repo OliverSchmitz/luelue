@@ -6,7 +6,7 @@ if not defined malloc set malloc=mimalloc
 
 cmake ^
     %CMAKE_ARGS% ^
-    -D Python_EXECUTABLE="%PYTHON%" ^
+    -D Python_EXECUTABLE="python" ^
     -D CMAKE_INSTALL_LIBDIR=lib ^
     -D HPX_WITH_EXAMPLES=FALSE ^
     -D HPX_WITH_MALLOC="%malloc%" ^

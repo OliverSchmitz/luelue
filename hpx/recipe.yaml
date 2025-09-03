@@ -39,10 +39,10 @@ outputs:
         - ${{ compiler('cxx') }}
 #        - ${{ stdlib("c") }}
         - cmake
+        - python
         - if: win
           then: git
           else: ninja
-        - ${{ "vs2022_win-64" if win }} # only in GitHub actions
       host:
         - asio
         - libboost-devel
@@ -51,7 +51,6 @@ outputs:
         - libhwloc
         - if: win
           then: mimalloc
-        - python
       run:
         # Packages needed for downstream packages that use HPX at:
         # - build-time: headers, libraries
@@ -62,6 +61,9 @@ outputs:
         - if: not win
           then: gperftools
         - python
+      ignore_run_exports:
+          from_package:
+              - libboost-devel
       run_exports:
         weak:
           - ${{ pin_subpackage("hpx", upper_bound="x.x") }}
@@ -78,7 +80,12 @@ outputs:
             - if: not win
               then: ninja
         script:
-          - hpxrun.py --help
+          - run_test.sh
+      - script:
+          - python $PREFIX/bin/hpxrun.py --help
+        requirements:
+          run:
+            - python
 
 about:
   summary: The C++ Standard Library for Parallelism and Concurrency

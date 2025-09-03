@@ -13,7 +13,7 @@ cmake \
     -G"Ninja" \
     ${CMAKE_ARGS} \
     -D CMAKE_INSTALL_LIBDIR=lib \
-    -D Python_EXECUTABLE="$PYTHON" \
+    -D Python_EXECUTABLE="python" \
     -D HPX_WITH_EXAMPLES=FALSE \
     -D HPX_WITH_MALLOC="${malloc:-tcmalloc}" \
     -D HPX_WITH_NETWORKING=FALSE \
