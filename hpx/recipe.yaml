@@ -1,75 +1,83 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/prefix-dev/recipe-format/main/schema.json
 schema_version: 1
 
 context:
-  version: 0.0.0
-
-package:
   name: hpx
+  version: 1.11.0
+  build_number: 9
+
+recipe:
+  name: ${{ name }}
   version: ${{ version }}
 
 source:
-  git: https://github.com/STEllAR-GROUP/hpx.git
-
+  url: https://github.com/STEllAR-GROUP/hpx/archive/refs/tags/v${{ version }}.tar.gz
+  sha256: 01ec47228a2253b41e318bb09c83325a75021eb6ef3262400fbda30ac7389279
 
 build:
-  number: 0
+  string: ${{ malloc }}_${{ hash }}_${{ build_number }}
+  number: ${{ build_number }}
+  variant:
+    use_keys:
+      # use malloc from the variant config, e.g. to build multiple malloc variants
+      - malloc
+    # this will down-prioritize the system variant versus other variants of the package
+    down_prioritize_variant: ${{ 1 if malloc == "system" else 0 }}
 
-requirements:
-  build:
-    # Section for the native build platform. Think "build-tools", that run on the native platform,
-    # but output results for the target platform.
-    # Dependencies required during the build phase not needed on the host.
-    - ${{ compiler('cxx') }}
-    # - ${{ stdlib("c") }}
-    - cmake
-    - if: win
-      then: git
-    - if: not win
-      then: ninja
-  host:
-    # Section for the target platform. Might not be the same as the build platform!
-    # Dependencies required during build phase needed on the host.
-    - asio
-    - libboost-devel #####################################################
-    - if: not osx
-      then: libboost-headers
-    # osx actually needs boost's CMake metadata _and_ libs
-    - if: osx
-      then: libboost-devel
-    - if: not win
-      then: gperftools
-    - libhwloc
-    - if: win
-      then: mimalloc
-  run:
-    # Dependencies required for using the software.
-    # Stuff required when building software that depends on HPX.
-    - asio
-    - if: not win
-      then: gperftools
-    - if: win
-      then: mimalloc
-  run_exports:
-    - ${{ pin_subpackage('hpx', upper_bound='x.x') }}
 
-tests:
-  - script: run_test
-    # additional requirements at test time
+outputs:
+  - package:
+      name: ${{ name }}
+      version: ${{ version }}
+    build:
+      script:
+        file: ${{ "build.sh" if unix else "build.bat" }}
+        env:
+          malloc: ${{ malloc }}
     requirements:
-      run:
+      build:
         - ${{ compiler('cxx') }}
+        - ${{ stdlib("c") }}
         - cmake
-        - if: not win
-          then: ninja
+        - if: win
+          then: git
+          else: ninja
+      host:
+        - asio
         - libboost-devel
-    # extra files to be copied to the test folder from the recipe or source directory
-    files:
-      recipe:
-        - test/CMakeLists.txt
-        - test/hello_hpx.cpp
+        - if: not win
+          then: gperftools
+        - libhwloc
+        - if: win
+          then: mimalloc
+        - python
+      run:
+        # Packages needed for downstream packages that use HPX at:
+        # - build-time: headers, libraries
+        # - runtime: shared libraries, interpreter (for hpxrun.py)
+        # Only list packages whose meta.yaml doesn't contain a run_exports already
+        - asio
+        - libboost-devel
+        - if: not win
+          then: gperftools
+        - python
+      run_exports:
+        weak:
+          - ${{ pin_subpackage("hpx", upper_bound="x.x") }}
 
-
-
+    tests:
+      - files:
+          recipe:
+            - test/CMakeLists.txt
+            - test/hello_hpx.cpp
+        requirements:
+          run:
+            - ${{ compiler('cxx') }}
+            - cmake
+            - if: not win
+              then: ninja
+        script:
+          - hpxrun.py --help
 
 about:
   summary: The C++ Standard Library for Parallelism and Concurrency

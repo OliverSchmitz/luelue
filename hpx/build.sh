@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 set -e
 
-
 mkdir build
 pushd build
 
@@ -14,12 +13,11 @@ cmake \
     -G"Ninja" \
     ${CMAKE_ARGS} \
     -D CMAKE_INSTALL_LIBDIR=lib \
-    -D PYTHON_EXECUTABLE="$PYTHON" \
+    -D Python_EXECUTABLE="$PYTHON" \
     -D HPX_WITH_EXAMPLES=FALSE \
-    -D HPX_WITH_MALLOC="tcmalloc" \
+    -D HPX_WITH_MALLOC="${malloc:-tcmalloc}" \
     -D HPX_WITH_NETWORKING=FALSE \
     -D HPX_WITH_TESTS=FALSE \
-    -D HPX_WITH_GENERIC_CONTEXT_COROUTINES=On \
     ..
-cmake --build . --config Release --parallel 1 #${CPU_COUNT}
+cmake --build . --config Release --parallel ${CPU_COUNT}
 cmake --install .
