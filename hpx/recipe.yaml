@@ -70,6 +70,7 @@ outputs:
           - ${{ pin_subpackage("hpx", upper_bound="x.x") }}
 
     tests:
+
       - files:
           recipe:
             - test/CMakeLists.txt
@@ -82,11 +83,45 @@ outputs:
               then: ninja
         script:
           - run_test.sh
-      - script:
-          - python $PREFIX/bin/hpxrun.py --help
-        requirements:
-          run:
-            - python
+
+      - package_contents:
+          files:
+              - if: win
+                then:
+                    - share/package/*.txt
+                    - PPPsbin/hpyrun.py
+                else:
+                    - bin/hpxrun.py
+
+
+
+
+
+
+
+
+
+
+
+#
+#
+#       - files:
+#           recipe:
+#             - test/CMakeLists.txt
+#             - test/hello_hpx.cpp
+#         requirements:
+#           run:
+#             - ${{ compiler('cxx') }}
+#             - cmake
+#             - if: not win
+#               then: ninja
+#         script:
+#           - run_test.sh
+#       - script:
+#           - python $PREFIX/bin/hpxrun.py --help
+#         requirements:
+#           run:
+#             - python
 
 about:
   summary: The C++ Standard Library for Parallelism and Concurrency
