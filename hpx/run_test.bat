@@ -1,6 +1,6 @@
 pushd test
 
-cmake %CMAKE_ARGS% .
+cmake %CMAKE_ARGS% -G "Ninja" .
 if errorlevel 1 exit /b 1
 
 cmake --build . --config Release
