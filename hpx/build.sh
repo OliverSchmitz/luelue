@@ -7,6 +7,8 @@ pushd build
 if [[ "$target_platform" == "osx-64" ]]; then
     # https://conda-forge.org/docs/maintainer/knowledge_base.html#newer-c-features-with-old-sdk
     export CXXFLAGS="${CXXFLAGS} -D_LIBCPP_DISABLE_AVAILABILITY"
+elif [[ "$target_platform" == "linux-aarch64" ]]; then
+    export CXXFLAGS="${CXXFLAGS} -DHPX_WITH_GENERIC_CONTEXT_COROUTINES=On"
 fi
 
 cmake \
