@@ -58,7 +58,6 @@ outputs:
         # - runtime: shared libraries, interpreter (for hpxrun.py)
         # Only list packages whose meta.yaml doesn't contain a run_exports already
         - asio
-        - libboost-devel
         - if: not win
           then: gperftools
       ignore_run_exports:
