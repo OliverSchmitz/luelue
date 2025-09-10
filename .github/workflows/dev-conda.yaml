@@ -16,8 +16,8 @@ jobs:
                     target-platform: linux-aarch64
                   - os: macos-15
                     target-platform: osx-arm64
-                  - os: windows-2025
-                    target-platform: win-64
+                  # - os: windows-2025
+                  #   target-platform: win-64
 
             fail-fast: false
 
