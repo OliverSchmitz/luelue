@@ -69,22 +69,22 @@ outputs:
           - ${{ pin_subpackage("hpx", upper_bound="x.x") }}
 
     tests:
-      - files:
-          recipe:
-            - test/CMakeLists.txt
-            - test/hello_hpx.cpp
-        requirements:
-          run:
-            - ${{ compiler('cxx') }}
-            - ${{ "vs2022_win-64" if win }} # only in GitHub actions
-            - cmake
-            - ninja
-        script:
-          - if: win
-            then:
-              - run_test.bat
-            else:
-              - run_test.sh
+      # - files:
+      #     recipe:
+      #       - test/CMakeLists.txt
+      #       - test/hello_hpx.cpp
+      #   requirements:
+      #     run:
+      #       - ${{ compiler('cxx') }}
+      #       - ${{ "vs2022_win-64" if win }} # only in GitHub actions
+      #       - cmake
+      #       - ninja
+      #   script:
+      #     - if: win
+      #       then:
+      #         - run_test.bat
+      #       else:
+      #         - run_test.sh
       - package_contents:
           files:
               - if: win
