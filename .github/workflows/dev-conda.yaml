@@ -10,8 +10,8 @@ jobs:
         strategy:
             matrix:
                 include:
-                  - os: ubuntu-24.04
-                    target-platform: linux-64
+                  # - os: ubuntu-24.04
+                  #   target-platform: linux-64
                   # - os: ubuntu-24.04-arm
                   #   target-platform: linux-aarch64
                   - os: macos-15
