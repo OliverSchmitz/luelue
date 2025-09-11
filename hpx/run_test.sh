@@ -2,10 +2,17 @@ set -e
 
 pushd test
 
-if [[ "$target_platform" == "osx-64" ]] || [[ "$target_platform" == "osx-arm64" ]]; then
+if [[ "$(uname -s)" == "Darwin" ]]; then
     # https://conda-forge.org/docs/maintainer/knowledge_base.html#newer-c-features-with-old-sdk
     export CXXFLAGS="${CXXFLAGS} -D_LIBCPP_DISABLE_AVAILABILITY"
 fi
+
+
+echo "**************************************************************************************************"
+echo "a " "$target_platform" " " $target_platform
+echo "$CXXFLAGS"
+echo "**************************************************************************************************"
+
 
 cmake -G "Ninja" -D CMAKE_VERBOSE_MAKEFILE=ON ${CMAKE_ARGS} .
 
