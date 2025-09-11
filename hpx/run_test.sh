@@ -7,7 +7,7 @@ if [[ "$target_platform" == "osx-64" ]] || [[ "$target_platform" == "osx-arm64" 
     export CXXFLAGS="${CXXFLAGS} -D_LIBCPP_DISABLE_AVAILABILITY"
 fi
 
-cmake -G "Ninja" ${CMAKE_ARGS} .
+cmake -G "Ninja" -D CMAKE_VERBOSE_MAKEFILE=ON ${CMAKE_ARGS} .
 
 cmake --build . --config Release
 ./hello_hpx

@@ -25,6 +25,7 @@ cmake \
     -D HPX_WITH_MALLOC="${malloc:-tcmalloc}" \
     -D HPX_WITH_NETWORKING=FALSE \
     -D HPX_WITH_TESTS=FALSE \
+    -D CMAKE_VERBOSE_MAKEFILE=ON \
     ..
 cmake --build . --config Release --parallel ${CPU_COUNT}
 cmake --install .
