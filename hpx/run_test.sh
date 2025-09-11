@@ -19,11 +19,14 @@ cmake -G "Ninja" -D CMAKE_VERBOSE_MAKEFILE=ON ${CMAKE_ARGS} .
 cmake --build . --config Release
 ./hello_hpx
 
+
+cmake --install . --prefix hello
+
 echo "**************************************************************************************************"
 pwd
 echo "**************************************************************************************************"
 find .
 echo "**************************************************************************************************"
 
-cmake --install . --prefix hello
+
 hello/bin/hello_hpx
