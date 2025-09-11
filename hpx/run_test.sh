@@ -1,4 +1,4 @@
-set -e
+set -ev
 
 pushd test
 
