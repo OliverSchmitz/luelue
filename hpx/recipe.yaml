@@ -4,7 +4,7 @@ schema_version: 1
 context:
   name: hpx
   version: 1.11.0
-  build_number: 9
+  build_number: 11
 
 recipe:
   name: ${{ name }}
@@ -37,16 +37,15 @@ outputs:
     requirements:
       build:
         - ${{ compiler('cxx') }}
-#        - ${{ stdlib("c") }}
-        - ${{ "vs2022_win-64" if win }} # only in GitHub actions
+        # # # # # - ${{ stdlib("c") }}
         - cmake
-        - python
+        - python *
         - if: win
           then: git
-        - ninja
+          else: ninja
       host:
         - asio
-        - libboost-devel
+        # # # # # - libboost-devel
         - if: not win
           then: gperftools
         - libhwloc
@@ -55,14 +54,14 @@ outputs:
       run:
         # Packages needed for downstream packages that use HPX at:
         # - build-time: headers, libraries
-        # - runtime: shared libraries, interpreter (for hpxrun.py)
+        # - runtime: shared libraries
         # Only list packages whose meta.yaml doesn't contain a run_exports already
         - asio
         - if: not win
           then: gperftools
-      ignore_run_exports:
-          from_package:
-              - libboost-devel
+      # ignore_run_exports:
+      #     from_package:
+      #         - libboost-devel
       run_exports:
         weak:
           - ${{ pin_subpackage("hpx", upper_bound="x.x") }}
@@ -75,10 +74,11 @@ outputs:
         requirements:
           run:
             - ${{ compiler('cxx') }}
-            - ${{ "vs2022_win-64" if win }} # only in GitHub actions
+            # # # # # - ${{ stdlib("c") }}
             - cmake
-            - libboost-devel
-            - ninja
+            # # # # # - libboost-devel
+            - if: not win
+              then: ninja
         script:
           - if: win
             then:
@@ -92,36 +92,6 @@ outputs:
                     - Library/bin/hpxrun.py
                 else:
                     - bin/hpxrun.py
-
-
-
-
-
-
-
-
-
-
-
-#
-#
-#       - files:
-#           recipe:
-#             - test/CMakeLists.txt
-#             - test/hello_hpx.cpp
-#         requirements:
-#           run:
-#             - ${{ compiler('cxx') }}
-#             - cmake
-#             - if: not win
-#               then: ninja
-#         script:
-#           - run_test.sh
-#       - script:
-#           - python $PREFIX/bin/hpxrun.py --help
-#         requirements:
-#           run:
-#             - python
 
 about:
   summary: The C++ Standard Library for Parallelism and Concurrency

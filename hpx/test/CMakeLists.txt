@@ -10,3 +10,5 @@ target_link_libraries(hello_hpx
     HPX::wrap_main
     HPX::iostreams_component
 )
+
+install(TARGETS hello_hpx)
