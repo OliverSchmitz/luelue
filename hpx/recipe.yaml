@@ -57,6 +57,7 @@ outputs:
         # - runtime: shared libraries
         # Only list packages whose meta.yaml doesn't contain a run_exports already
         - asio
+        - libboost-devel
         - if: not win
           then: gperftools
       run_exports:
