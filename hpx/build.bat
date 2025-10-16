@@ -12,7 +12,6 @@ cmake ^
     -D HPX_WITH_MALLOC="%malloc%" ^
     -D HPX_WITH_NETWORKING=FALSE ^
     -D HPX_WITH_TESTS=FALSE ^
-    -D HPX_WITH_FETCH_BOOST=ON ^
     ..
 
 if errorlevel 1 exit /b 1

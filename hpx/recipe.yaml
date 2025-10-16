@@ -45,7 +45,7 @@ outputs:
           else: ninja
       host:
         - asio
-        # # # # # - libboost-devel 
+        - libboost-devel
         - if: not win
           then: gperftools
         - libhwloc
@@ -59,9 +59,6 @@ outputs:
         - asio
         - if: not win
           then: gperftools
-      # ignore_run_exports:
-      #     from_package:
-      #         - libboost-devel
       run_exports:
         weak:
           - ${{ pin_subpackage("hpx", upper_bound="x.x") }}
@@ -76,7 +73,6 @@ outputs:
             - ${{ compiler('cxx') }}
             # # # # # - ${{ stdlib("c") }}
             - cmake
-            # # # # # - libboost-devel
             - if: not win
               then: ninja
         script:
