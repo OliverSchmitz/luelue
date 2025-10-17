@@ -40,6 +40,7 @@ outputs:
         # # # # # - ${{ stdlib("c") }}
         - cmake
         - python *
+        - ${{ "vs2022_win-64" if win }} # only in GitHub actions
         - if: win
           then: git
           else: ninja

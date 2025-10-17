@@ -9,9 +9,10 @@ if [[ "$(uname -s)" == "Darwin" ]]; then
     export CXXFLAGS="${CXXFLAGS} -D_LIBCPP_DISABLE_AVAILABILITY"
 fi
 
-if [[ "$(uname -s)" == "linux-aarch64" ]]; then
+if [[ "$(uname -s)" == "Linux" ]] && [[ "$(uname -m)" == "aarch64" ]]; then
     export CMAKE_ARGS="${CMAKE_ARGS} -DHPX_WITH_GENERIC_CONTEXT_COROUTINES=ON"
 fi
+
 
 echo "**************************************************************************************************"
 echo "$target_platform"
