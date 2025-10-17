@@ -7,9 +7,19 @@ pushd build
 if [[ "$(uname -s)" == "Darwin" ]]; then
     # https://conda-forge.org/docs/maintainer/knowledge_base.html#newer-c-features-with-old-sdk
     export CXXFLAGS="${CXXFLAGS} -D_LIBCPP_DISABLE_AVAILABILITY"
-elif [[ "$(uname -s)" == "linux-aarch64" ]]; then
+fi
+
+if [[ "$(uname -s)" == "linux-aarch64" ]]; then
     export CMAKE_ARGS="${CMAKE_ARGS} -DHPX_WITH_GENERIC_CONTEXT_COROUTINES=ON"
 fi
+
+echo "**************************************************************************************************"
+echo "$target_platform"
+echo "$(uname -s)"
+echo "$(uname -m)"
+echo "$CXXFLAGS"
+echo "**************************************************************************************************"
+
 
 cmake \
     -G"Ninja" \
