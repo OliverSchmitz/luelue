@@ -1,6 +1,8 @@
 name: Development Conda
 
 on:
+    paths-ignore:
+      - 'docs/**'
     push:
     pull_request:
 
