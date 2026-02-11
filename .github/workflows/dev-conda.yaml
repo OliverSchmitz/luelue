@@ -1,10 +1,11 @@
 name: Development Conda
 
 on:
-    paths-ignore:
-      - 'docs/**'
+
     push:
     pull_request:
+        paths-ignore:
+          - 'docs/**'
 
 jobs:
     build:
