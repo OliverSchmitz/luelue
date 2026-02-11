@@ -1,11 +1,16 @@
 name: Development Conda
 
 on:
-
-    push:
-    pull_request:
+    [push, pull_request]
         paths-ignore:
           - 'docs/**'
+
+
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+
+
 
 jobs:
     build:
